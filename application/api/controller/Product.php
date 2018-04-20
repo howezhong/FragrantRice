@@ -25,13 +25,19 @@ class Product extends Base
         return json($result);
     }
 
+    public function getAllCategory($id='', $page = 1, $size = 30) {
+        (new IDMustBePositiveInt())->goCheck();
+
+    }
     /**
      * 删除商品信息
      * @param  int $id 商品ID
      * @return boolean true/false
      */
     public function deleteOne($id='') {
-        return ProductModel::destroy($id,false); 
+        // 校验ID
+        (new IDMustBePositiveInt())->goCheck();
+        // return ProductModel::destroy($id);
     }
 
 

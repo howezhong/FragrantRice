@@ -11,7 +11,7 @@ class BaseValidate extends Validate
 	public function goCheck() {
 		// 获取https传入的参数  对这些参数进行校验
 		$request = Request::instance();
-		$params = $request->param();
+		$params = $request->param();//dump($params);die;
 		if (!$this->check($params)) {
 			$exception = new ParameterException([
             	'msg' => is_array($this->error) ? implode(';', $this->error) : $this->error,
