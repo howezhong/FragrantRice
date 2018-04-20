@@ -24,7 +24,7 @@ class Product extends Base
         }
         return json($result);
     }
-
+    
     public function getAllCategory($id='', $page = 1, $size = 30) {
         (new IDMustBePositiveInt())->goCheck();
 
