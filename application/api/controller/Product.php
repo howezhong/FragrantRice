@@ -37,7 +37,7 @@ class Product extends Base
     public function deleteOne($id='') {
         // 校验ID
         (new IDMustBePositiveInt())->goCheck();
-        // return ProductModel::destroy($id);
+        return ProductModel::destroy($id);
     }
 
 
