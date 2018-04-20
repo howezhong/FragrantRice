@@ -2,6 +2,7 @@
 namespace app\api\controller;
 
 use app\api\validate\IDMustBePositiveInt;
+use app\api\validate\PagingParameter;
 use app\api\model\Product as ProductModel;
 use app\lib\exception\ProductException;
 
@@ -25,9 +26,25 @@ class Product extends Base
         return json($result);
     }
     
+    /**
+     * 根据类目ID获取该类目下所有商品(分页）
+     * @param  integer  $id   商品ID
+     * @param  integer $page  起始页码
+     * @param  integer $size  
+     * @return [type]        
+     */
     public function getAllCategory($id='', $page = 1, $size = 30) {
         (new IDMustBePositiveInt())->goCheck();
-
+        // 检测页码是否是符合规范
+        (new PagingParameter())->goCheck();
+        $pagingProducts = ProductModel::getProductsByCategoryID($id,true,$page,$size);
+        if ($pagingProducts->isEmpty()) {
+            return json([
+                'current_page' => $pagingProducts->currentPage(),
+                'data' => []
+            ]);
+        }
+        return json($pagingProducts);
     }
     /**
      * 删除商品信息

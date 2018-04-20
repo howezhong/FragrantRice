@@ -11,6 +11,10 @@
 
 use think\Route;
 
+// Banner
 Route::get('banner/:id','api/Banner/getBanner'); // 访问方式 banner/1
 
+// product
 Route::get('product/:id','api/Product/getByCategory'); // 访问方式 product/1
+Route::get('product/paginate','api/product/getAllCategory');
+

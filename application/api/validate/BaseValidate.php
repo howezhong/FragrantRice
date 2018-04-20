@@ -7,7 +7,6 @@ use app\lib\exception\ParameterException;
 
 class BaseValidate extends Validate
 {
-
 	public function goCheck() {
 		// 获取https传入的参数  对这些参数进行校验
 		$request = Request::instance();
