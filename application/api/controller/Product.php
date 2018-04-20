@@ -38,6 +38,8 @@ class Product extends Base
         // 检测页码是否是符合规范
         (new PagingParameter())->goCheck();
         $pagingProducts = ProductModel::getProductsByCategoryID($id,true,$page,$size);
+        // 该结果是数据集对象,判空要用自带的isEmpty()
+        // 二维数组的直接使用empty()
         if ($pagingProducts->isEmpty()) {
             return json([
                 'current_page' => $pagingProducts->currentPage(),
