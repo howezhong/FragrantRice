@@ -20,7 +20,15 @@ class Theme extends BaseModel
 		return $this->belongsTo('Image', 'head_img_id', 'id');
 	}
 
-    public static function getThemeList() {
+	/**
+     * 关联product，多对多关系
+     */
+    public function products() {
+        return $this->belongsToMany('Product', 'theme_product', 'product_id', 'theme_id');
+    }
 
+    public static function getThemeWithProducts($id) {
+        $themes = self::with('products,topicImg,headImg')->find($id);
+        return $themes;
     }
 }

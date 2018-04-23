@@ -19,4 +19,5 @@ Route::get('api/product/:id','api/Product/getByCategory'); // 访问方式 produ
 Route::get('api/product/paginate','api/Product/getAllCategory');
 
 // Theme
+Route::get('api/theme/:id','api/Theme/getComplexOne');
 Route::get('api/theme','api/Theme/getSimpleList');
