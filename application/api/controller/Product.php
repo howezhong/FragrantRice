@@ -5,6 +5,7 @@ use app\api\validate\IDMustBePositiveInt;
 use app\api\validate\PagingParameter;
 use app\api\model\Product as ProductModel;
 use app\lib\exception\ProductException;
+use app\api\validate\Count;
 
 class Product extends Base
 {
@@ -17,7 +18,6 @@ class Product extends Base
     {
     	// 校验ID
         (new IDMustBePositiveInt())->goCheck();
-
         // 获取商品详情
         $result = ProductModel::getProductDetail($id);
         if (!$result) {
@@ -25,13 +25,13 @@ class Product extends Base
         }
         return json($result);
     }
-    
+
     /**
      * 根据类目ID获取该类目下所有商品(分页）
      * @param  integer  $id   商品ID
      * @param  integer $page  起始页码
-     * @param  integer $size  
-     * @return [type]        
+     * @param  integer $size
+     * @return [type]
      */
     public function getAllCategory($id='', $page = 1, $size = 30) {
         (new IDMustBePositiveInt())->goCheck();
@@ -59,5 +59,19 @@ class Product extends Base
         return ProductModel::destroy($id);
     }
 
+    /**
+     * 获取最新新品,展示条数动态获取，不过为了减少服务器压力，给予限制最高多少条
+     * @param  int $count 条数
+     * @return
+     */
+    public function getRecoet($count=15) {
+        (new Count())->goCheck();
+        $products = ProductModel::getMostRecent($count);
+        if ($products->isEmpty()) {
+            throw new ProductException();
+        }
+        $products = $products->hidden(['summary']);
+        return json($products);
+    }
 
 }

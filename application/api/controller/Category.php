@@ -13,7 +13,7 @@ class Category extends Base
 	 */
     public function getAllCategories() {
         $result = CategoryModel::all([],'img'); // img关联模型里的img方法获取Image里的图片属性
-        if (empty($result)) {
+        if ($result->isEmpty()) {
         	throw new MissException([
                'msg' => '还没有任何类目',
                'errorCode' => 50000

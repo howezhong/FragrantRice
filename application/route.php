@@ -15,8 +15,8 @@ use think\Route;
 Route::get('api/banner/:id','api/Banner/getBanner'); // 访问方式 banner/1
 
 // product
-Route::get('api/product/:id','api/Product/getByCategory'); // 访问方式 product/1
-Route::get('api/product/paginate','api/Product/getAllCategory');
+// Route::get('api/product/:id','api/Product/getByCategory'); // 访问方式 product/1
+// Route::get('api/product/paginate','api/Product/getAllCategory');
 
 // Theme
 Route::get('api/theme/:id','api/Theme/getComplexOne');
