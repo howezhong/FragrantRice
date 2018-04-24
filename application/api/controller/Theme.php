@@ -22,8 +22,7 @@ class Theme extends Base
         
         $ids = explode(',', $ids);
         $result = ThemeModel::with('topicImg,headImg')->select($ids);
-        // 因为返回的格式数据默认是数组,所以这里把它转为数据集collection
-        if (collection($result)->isEmpty()) {
+        if ($result->isEmpty()) {
             throw new ThemeException();
         }
         return json($result);
@@ -31,8 +30,8 @@ class Theme extends Base
     
     /**
      * 获取该主题下的所有商品
-     * @param  [type] $id [description]
-     * @return [type]     [description]
+     * @param  int $id 主题ID
+     * @return json
      */
     public function getComplexOne($id) {
         (new IDMustBePositiveInt())->goCheck();

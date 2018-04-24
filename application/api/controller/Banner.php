@@ -10,7 +10,7 @@ class Banner extends Base
     /**
      * 获取指定ID的banner信息
      * 
-     * @param  [url]   /banner/:id
+     * @param  [url]   api/banner/:id
      * @param  [http]  GET
      * @param  int $id banner id
      * @return array of banner item , code 200
