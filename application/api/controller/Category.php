@@ -21,5 +21,4 @@ class Category extends Base
         }
         return json($result);
     }
-
 }

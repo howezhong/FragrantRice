@@ -8,14 +8,14 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-
+// 动态路由(TP5推崇方式)
 use think\Route;
 
 // Banner
-Route::get('api/banner/:id','api/Banner/getBanner'); // 访问方式 banner/1
+Route::get('api/banner/:id','api/Banner/getBanner'); // 访问方式 api/banner/1
 
 // product
-// Route::get('api/product/:id','api/Product/getByCategory'); // 访问方式 product/1
+// Route::get('api/product/:id','api/Product/getByCategory'); // 访问方式 api/product/1
 // Route::get('api/product/paginate','api/Product/getAllCategory');
 
 // Theme
