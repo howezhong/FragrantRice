@@ -55,9 +55,8 @@ class UserToken
     private function grantToken($wxResult)
     {
     	/**
-    	 * 拿到openid
-    	 * 数据库里看一下，这个openid是不是已经存在
-    	 * 如果存在则不出伦理，如果不㛮那么新增一条user记录
+    	 * 拿到openid后到数据库里看一下，这个openid是不是已经存在
+    	 * 如果存在则不处理，如果不存在那么新增一条user记录
     	 * 生成令牌，准备缓存数据，写入缓存
     	 * 把令牌返回到客户端去
     	 * 
