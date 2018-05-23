@@ -8,18 +8,23 @@ class UserToken
 	protected $wxAppSecret;
 	protected $wxLoginUrl;
 
+    /**
+     * 拼接URL
+     * @param string $code
+     */
 	public function __construct($code){
 		$this->code = $code;
         $this->wxAppID = config('wx.app_id');
         $this->wxAppSecret = config('wx.app_secret');
+        // sprintf() 函数把格式化的字符串写入一个变量中
         $this->wxLoginUrl = sprintf(
             config('wx.login_url'), $this->wxAppID, $this->wxAppSecret, $this->code);
 	}
 
 	/**
 	 * 获取session_key
-	 * @param  [type] $code [description]
-	 * @return [type]       [description]
+	 * @param  string $code 
+	 * @return [type]       
 	 */
 	public function get($code){
 		$result =curl_get($this->wxLoginUrl);
