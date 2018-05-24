@@ -10,7 +10,7 @@ class Token
     	(new TokenGet())->goCheck();
     	$ut = new UserToken($code); // 放到这是因为通过构造函数获取这个code的
     	$token = $ut->get();
-    	return $token;
+    	return ['token'=>$token];
     }
     
 }

@@ -1,7 +1,7 @@
 <?php
 namespace app\api\service;
 
-class UserToken
+class UserToken extends Token
 {
 	protected $code;
 	protected $wxAppID;
@@ -72,13 +72,11 @@ class UserToken
     	 */
         $openid = $wxResult['openid'];
         $user = User::getByOpenID($openid);
-        if (!$user)
+        if (!$user){
             // 借助微信的openid作为用户标识
             // 但在系统中的相关查询还是使用自己的uid
-        {
             $uid = $this->newUser($openid);
-        }
-        else {
+        } else {
             $uid = $user->id;
         }
         $cachedValue = $this->prepareCachedValue($wxResult, $uid);
@@ -86,7 +84,27 @@ class UserToken
         return $token;
     }
 
+    // 写入缓存
+    private function saveToCache($wxResult) {
+        $key = self::generateToken();
+        $value = json_encode($wxResult);
+        // 缓存时间
+        $expire_in = config('setting.token_expire_in');
+        $result = cache($key, $value, $expire_in);
 
+        if (!$result){
+            throw new TokenException([
+                'msg' => '服务器缓存异常',
+                'errorCode' => 10005
+            ]);
+        }
+        return $key; // 此就是令牌
+    }
+    /**
+     * @param $wxResult
+     * @param $uid
+     * @return mixed
+     */
     private function prepareCachedValue($wxResult, $uid)
     {
         $cachedValue = $wxResult;
@@ -95,7 +113,7 @@ class UserToken
         return $cachedValue;
     }
 
-    // 创建新用户
+    // 创建新用户,写入一条数据
     private function newUser($openid)
     {
         // 有可能会有异常，如果没有特别处理
@@ -103,10 +121,7 @@ class UserToken
         // 全局异常处理会记录日志
         // 并且这样的异常属于服务器异常
         // 也不应该定义BaseException返回到客户端
-        $user = User::create(
-            [
-                'openid' => $openid
-            ]);
+        $user = User::create(['openid' => $openid]);
         return $user->id;
     }
 }
