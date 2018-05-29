@@ -1,8 +1,6 @@
 <?php
 namespace app\api\model;
 
-use think\Model;
-
 class User extends BaseModel
 {
 	protected $autoWriteTimestamp = true;
@@ -23,7 +21,7 @@ class User extends BaseModel
      */
     public static function getByOpenID($openid)
     {
-        $user = User::where('openid', '=', $openid)->find();
+        $user = self::where('openid', '=', $openid)->find();
         return $user;
     }
 }

@@ -1,6 +1,12 @@
 <?php
 namespace app\api\service;
 
+use app\api\model\User as UserModel;
+use app\lib\exception\TokenException;
+use app\lib\exception\WeChatException;
+use think\Exception;
+use app\lib\enum\ScopeEnum;
+
 class UserToken extends Token
 {
 	protected $code;
@@ -22,13 +28,12 @@ class UserToken extends Token
 	}
 
 	/**
-	 * 获取session_key
-	 * @param  string $code 
-	 * @return [type]       
+	 * 获取openid / session_key
+	 * @return [type]
 	 */
-	public function get($code){
-		$result =curl_get($this->wxLoginUrl);
-		$wxResult = json_decode( $result, true );
+	public function get() {
+		$result = curl_get($this->wxLoginUrl);
+		$wxResult = json_decode( $result, true ); // 加true变成数组,不加是对象
 		if (empty($wxResult)) {
 			throw new Exception("获取session_key及openID时异常，微信内部错误");
 		} else {
@@ -36,13 +41,17 @@ class UserToken extends Token
 			if ($loginFail) {
 				$this->processLoginError($wxResult);
 			} else {
-				$this->grantToken();
+				return $this->grantToken($wxResult);
 			}
 		}
 	}
 
+    /**
+     * 返回错误信息
+     * @param $wxResult
+     */
 	private function processLoginError($wxResult){
-		throw new WxChatException([
+		throw new WeChatException([
 			'msg' => $wxResult['errmsg'],
 			'errorCode' => $wxResult['errcode']
 		]);
@@ -71,7 +80,7 @@ class UserToken extends Token
     	 * $token = Request::instance()->token('token', 'md5');
     	 */
         $openid = $wxResult['openid'];
-        $user = User::getByOpenID($openid);
+        $user = UserModel::getByOpenID($openid);
         if (!$user){
             // 借助微信的openid作为用户标识
             // 但在系统中的相关查询还是使用自己的uid
@@ -85,9 +94,9 @@ class UserToken extends Token
     }
 
     // 写入缓存
-    private function saveToCache($wxResult) {
+    private function saveToCache($cachedValue) {
         $key = self::generateToken();
-        $value = json_encode($wxResult);
+        $value = json_encode($cachedValue);
         // 缓存时间
         $expire_in = config('setting.token_expire_in');
         $result = cache($key, $value, $expire_in);
@@ -121,7 +130,7 @@ class UserToken extends Token
         // 全局异常处理会记录日志
         // 并且这样的异常属于服务器异常
         // 也不应该定义BaseException返回到客户端
-        $user = User::create(['openid' => $openid]);
+        $user = UserModel::create(['openid' => $openid]);
         return $user->id;
     }
 }

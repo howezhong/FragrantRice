@@ -1,7 +1,6 @@
 <?php
 namespace app\api\controller;
 
-use app\api\controller\Base;
 use app\api\model\Category as CategoryModel;
 use app\LIB\exception\MissException;
 
