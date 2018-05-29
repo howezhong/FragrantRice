@@ -3,3 +3,5 @@ composer.lock
 *.log
 /.svn
 build.php
+database.php
+runtime/
