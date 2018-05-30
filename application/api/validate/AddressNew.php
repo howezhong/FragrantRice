@@ -11,7 +11,7 @@ class AddressNew extends BaseValidate
     // 所有数据库和user关联的外键统一使用user_id，而不要使用uid
     protected $rule = [
         ['name','require|isNotEmpty','收获人姓名必填'],
-        ['mobile','require|isNotEmpty','手机号码必填'],
+        ['mobile','require|isMobile','手机号码必填|手机号码格式不正确'],
         ['province','require|isNotEmpty','省名必填'],
         ['city','require|isNotEmpty','市名必填'],
         ['country','require|isNotEmpty','区域必填'],

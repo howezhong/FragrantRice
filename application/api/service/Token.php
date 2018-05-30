@@ -50,6 +50,7 @@ class Token
      * @throws TokenException
      */
     public static function getCurrentTokenVar($key) {
+        // 从http请求头里拿到token
         $token = Request::instance()->header('token');
         $vars = Cache::get($token);
         if (!$vars) {
