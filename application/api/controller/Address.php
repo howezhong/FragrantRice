@@ -13,8 +13,11 @@ class Address extends Base
         // 参数验证
         $validate = new AddressNew();
         $validate->goCheck();
+        // 获取UID
         $uid = TokenService::getCurrentUid();
         $user = UserModel::get($uid);
+        if ($user) {
 
+        }
     }
 }
