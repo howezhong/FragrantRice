@@ -32,3 +32,4 @@ Route::group('api/product', function(){
 Route::post('api/token/user','api/Token/getToken');
 
 Route::post('api/address','api/Address/createOrUpdateAddress');
+Route::get('api/address/get', 'api/Address/getUserAddress');

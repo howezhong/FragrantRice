@@ -41,7 +41,7 @@ class Token
             return $uid;
         }
     }
-
+//sql必知必会
     /**
      * 获取UID
      * @param $key
