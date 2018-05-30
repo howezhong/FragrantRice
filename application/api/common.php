@@ -68,6 +68,11 @@ function curl_get($url, &$httpCode = 0)
     return $file_contents;
 }
 
+/**
+ * 获取随机字符串
+ * @param $length
+ * @return null|string
+ */
 function getRandChar($length) {
     $str = null;
     $strPol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
