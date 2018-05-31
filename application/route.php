@@ -36,5 +36,5 @@ Route::get('api/address/get', 'api/Address/getUserAddress');
 
 //Order
 Route::post('api/order', 'api/Order/placeOrder');
-Route::get('api/order/:id', 'api/Order/getDetail',[], ['id'=>'\d+']); // 加了验证，就不会影响别的匹配了
+Route::get('api/order/:id', 'api/Order/getDetail',[], ['id'=>'\d+']); // 加了正则验证，是为了不影响别的匹配，因为路由匹配是上到下匹配的
 Route::put('api/order/delivery', 'api/Order/delivery');
