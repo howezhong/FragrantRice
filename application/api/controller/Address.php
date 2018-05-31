@@ -11,8 +11,9 @@ use app\lib\enum\ScopeEnum;
 use app\lib\exception\SuccessMessage;
 use app\lib\exception\TokenException;
 use app\lib\exception\UserException;
+use think\Controller;
 
-class Address extends Base
+class Address extends Controller
 {
     // 前置操作
     protected $beforeActionList = [

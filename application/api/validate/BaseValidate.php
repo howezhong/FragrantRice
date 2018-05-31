@@ -55,13 +55,11 @@ class BaseValidate extends Validate
             ]);
         }
         // 根据规则获取数据，用户多传的不要
-//        $newArray = [];
-        // 会报$key未定义数组下标0的错
-//        foreach ($this->rule as $key => $value) {
-//            $newArray[$value[$key]] = $arrays[$key];
-//        }
-//        return $newArray;
-        return $arrays;
+        $newArray = [];
+        foreach ($this->rule as $key => $value) {
+            $newArray[$value[0]] = $arrays[$value[0]];
+        }
+        return $newArray;
     }
 
     //没有使用TP的正则验证，集中在一处方便以后修改
