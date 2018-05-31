@@ -33,3 +33,8 @@ Route::post('api/token/user','api/Token/getToken');
 
 Route::post('api/address','api/Address/createOrUpdateAddress');
 Route::get('api/address/get', 'api/Address/getUserAddress');
+
+//Order
+Route::post('api/order', 'api/Order/placeOrder');
+Route::get('api/order/:id', 'api/Order/getDetail',[], ['id'=>'\d+']); // 加了验证，就不会影响别的匹配了
+Route::put('api/order/delivery', 'api/Order/delivery');
