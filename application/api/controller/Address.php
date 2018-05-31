@@ -11,13 +11,12 @@ use app\lib\enum\ScopeEnum;
 use app\lib\exception\SuccessMessage;
 use app\lib\exception\TokenException;
 use app\lib\exception\UserException;
-use think\Controller;
 
-class Address extends Controller
+class Address extends Base
 {
-    // 前置操作
+    // 前置操作的方法名要小写,不能大写,否则无效
     protected $beforeActionList = [
-        'checkPrimaryScope' => ['only' => 'createOrUpdateAddress']
+        'checkPrimaryScope' => ['only' => 'createorupdateaddress']
     ];
 
     /**
