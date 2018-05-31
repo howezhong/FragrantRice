@@ -20,22 +20,6 @@ class Address extends Base
     ];
 
     /**
-     * 检查权限
-     */
-    public function checkPrimaryScope() {
-        $socpe = TokenService::getCurrentTokenVar('scope');
-        if ($socpe) {
-            if ($socpe >= ScopeEnum::User) {
-                return true;
-            } else {
-                throw new ForbiddenException();
-            }
-        } else {
-            throw new TokenException();
-        }
-    }
-
-    /**
      * 获取用户地址信息
      * @return Json
      */

@@ -9,13 +9,18 @@ class OrderPlace extends BaseValidate
     protected $rule = [
         'products' => 'checkProducts'
     ];
-
+    // 该不会自动验证，所以需要new了传入进去
     protected $singleRule = [
         'product_id' => 'require|isPositiveInteger',
         'count' => 'require|isPositiveInteger',
     ];
 
     protected function checkProducts($values) {
+        if (!is_array($values)) {
+            throw new ParameterException([
+                'msg' => '商品参数不正确'
+            ]);
+        }
         if(empty($values)){
             throw new ParameterException([
                 'msg' => '商品列表不能为空'

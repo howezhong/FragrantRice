@@ -2,10 +2,22 @@
 namespace app\api\controller;
 
 use think\Controller;
+use app\api\service\Token;
 
 class Base extends Controller
 {
-	public function _initialize(){
-		
-	}
+    /**
+     * 检查权限
+     */
+    protected function checkPrimaryScope() {
+        Token::needPrimaryScope();
+    }
+
+    protected function checkSuperScope() {
+        Token::needSuperScope();
+    }
+
+    protected function checkExclusiveScope() {
+        Token::needExclusiveScope();
+    }
 }
