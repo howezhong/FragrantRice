@@ -2,7 +2,6 @@
 
 namespace app\api\service;
 
-
 use app\api\model\Product;
 use app\lib\exception\OrderException;
 
@@ -40,6 +39,7 @@ class Order
             'pStatusArray' => [] // 保存订单里所有商品的一个详细
         ];
         foreach ($this->oProducts as $oProducts) {
+            // 分离到别的方法验证是为了,防止循环的查数据对比,这种做法不对
             $pStatus = $this->getProduceStatus($oProducts['product_id'],$oProducts['count'],$this->products);
             if (!$pStatus['haveStock']) {
                $status['pass'] = false;
@@ -51,10 +51,10 @@ class Order
     }
 
     private function getProduceStatus($oPID, $oCount, $products) {
-        $pIndex = -1;
+        $pIndex = -1; // 表示该商品不存在
         $pStatus = [
             'id' => null,
-            'haveStock' => false,
+            'haveStock' => false, // 表示是否有库存
             'count' => 0,
             'name' => '',
             'totalPrice' => 0 // 某一类商品的总价格

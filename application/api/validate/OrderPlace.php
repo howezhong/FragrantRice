@@ -9,7 +9,7 @@ class OrderPlace extends BaseValidate
     protected $rule = [
         'products' => 'checkProducts'
     ];
-    // 该不会自动验证，所以需要new了传入进去
+    // 该自定义不会自动验证，所以需要new了传入进去
     protected $singleRule = [
         'product_id' => 'require|isPositiveInteger',
         'count' => 'require|isPositiveInteger',
@@ -33,7 +33,7 @@ class OrderPlace extends BaseValidate
     }
 
     private function checkProduct($value) {
-        $validate = new BaseValidate($this->singleRule);
+        $validate = new BaseValidate($this->singleRule); // 虽然继承于它,还是可以在new
         $result = $validate->check($value);
         if(!$result){
             throw new ParameterException([
